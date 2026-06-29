@@ -16,6 +16,7 @@
 </div>
 
 ---
+<img width="1430" height="1060" alt="image" src="https://github.com/user-attachments/assets/85b881f3-34e4-4997-8509-b3113aeec219" />
 
 ## ✨ Overview
 
@@ -29,19 +30,6 @@ src/phylospectra/  Reusable Python package functions
 data/              Input abundance, metadata and phylogeny tables
 outputs/           Default output directory for generated tables and figures
 ```
-
-The repository name is:
-
-```text
-Phylogenetic-Spectral-Decomposition-Framework
-```
-
-The importable Python package name is:
-
-```text
-phylospectra
-```
-
 ---
 
 ## 🧠 Core concept
@@ -80,60 +68,6 @@ low-frequency organization / high-frequency fragmentation
 
 ---
 
-## 📁 Repository structure
-
-```text
-Phylogenetic-Spectral-Decomposition-Framework/
-├── paper_code/
-│   ├── 01_mgnify_spectral_organization/
-│   │   ├── spectral_slope.py
-│   │   ├── random_order_permutation.py
-│   │   └── dominant_peak.py
-│   │
-│   ├── 02_host_stability_transitions/
-│   │   ├── ibd_spectral_slope.py
-│   │   ├── antibiotic_perturbation_spectral_slope.py
-│   │   ├── infant_maturation_spectral_slope.py
-│   │   └── host_macro_micro_spectral_space.py
-│   │
-│   ├── 03_pertubation_response_axes/
-│   │   ├── spectral_response_axis.py
-│   │   └── control_axis_specificity.py
-│   │
-│   ├── 04_spectral_compressibility/
-│   │   ├── spectral_compressibility_metrics.py
-│   │   └── low_order_biome_classification.py
-│   │
-│   └── 05_applications/
-│       ├── crc_fourier_harmonization.py
-│       └── spectral_community_generation.py
-│
-├── src/
-│   └── phylospectra/
-│       ├── __init__.py
-│       ├── io.py
-│       ├── spectral.py
-│       ├── response.py
-│       ├── harmonization.py
-│       ├── generation.py
-│       ├── evaluation.py
-│       └── visualization.py
-│
-├── data/
-├── outputs/
-├── figures/
-├── docs/
-├── README.md
-├── requirements.txt
-├── pyproject.toml
-├── LICENSE
-└── .gitignore
-```
-
-> ⚠️ Note: the current folder name `03_pertubation_response_axes` contains a spelling typo. The standard spelling is `03_perturbation_response_axes`. If the folder has already been used in scripts and README paths, keeping the current spelling is acceptable for consistency.
-
----
-
 ## ⚙️ Installation
 
 Clone this repository:
@@ -149,21 +83,6 @@ Create a virtual environment:
 python -m venv .venv
 source .venv/bin/activate
 ```
-
-On Windows PowerShell:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-Install the package and dependencies:
-
-```bash
-pip install -e .
-pip install -r requirements.txt
-```
-
 ---
 
 ## 📦 Dependencies
@@ -177,136 +96,6 @@ scipy
 scikit-learn
 matplotlib
 ```
-
-Additional dependencies used by some manuscript scripts:
-
-```text
-seaborn
-scikit-bio
-umap-learn
-tables
-```
-
-Suggested `requirements.txt`:
-
-```text
-numpy
-pandas
-scipy
-scikit-learn
-matplotlib
-seaborn
-scikit-bio
-umap-learn
-tables
-```
-
----
-
-## 🗂️ Data organization
-
-The scripts assume the following default data structure. Most scripts also allow custom paths through command-line arguments.
-
-```text
-data/
-├── phylogeny.csv
-│
-├── mgnify/
-│   ├── abu.h5
-│   └── metadata.csv
-│
-├── ibd/
-│   ├── abundance.csv
-│   └── metadata.csv
-│
-├── infant/
-│   ├── abundance.csv
-│   └── metadata.csv
-│
-├── palleja/
-│   ├── abundance_phylogeny_ordered.csv
-│   └── metadata.csv
-│
-├── etec/
-│   ├── etec_abundance_genus.csv
-│   └── etec_metadata.csv
-│
-├── okeefe/
-│   ├── okeefe_dietswap_abundance.csv
-│   └── okeefe_dietswap_metadata.csv
-│
-├── crc_7_cohorts/
-│   ├── classification.txt
-│   ├── d_crc1.txt
-│   ├── h_crc1.txt
-│   ├── ...
-│   ├── d_crc7.txt
-│   └── h_crc7.txt
-│
-└── generation/
-    └── mgnify_biome_subset/
-        ├── abundance.h5
-        └── metadata.csv
-```
-
----
-
-## 🚀 Quick start
-
-### 1. MGnify spectral slope
-
-```bash
-python paper_code/01_mgnify_spectral_organization/spectral_slope.py
-```
-
-### 2. Random taxon-order permutation
-
-```bash
-python paper_code/01_mgnify_spectral_organization/random_order_permutation.py
-```
-
-### 3. Host macro-micro spectral space
-
-```bash
-python paper_code/02_host_stability_transitions/host_macro_micro_spectral_space.py
-```
-
-### 4. Perturbation response axes
-
-```bash
-python paper_code/03_pertubation_response_axes/spectral_response_axis.py
-```
-
-### 5. Control-axis specificity
-
-```bash
-python paper_code/03_pertubation_response_axes/control_axis_specificity.py
-```
-
-### 6. Spectral compressibility
-
-```bash
-python paper_code/04_spectral_compressibility/spectral_compressibility_metrics.py
-```
-
-### 7. Low-order biome classification
-
-```bash
-python paper_code/04_spectral_compressibility/low_order_biome_classification.py
-```
-
-### 8. CRC Fourier harmonization
-
-```bash
-python paper_code/05_applications/crc_fourier_harmonization.py
-```
-
-### 9. Spectral community generation
-
-```bash
-python paper_code/05_applications/spectral_community_generation.py
-```
-
 ---
 
 ## 🧩 Manuscript-to-code map
@@ -536,49 +325,6 @@ save_figure
 
 ---
 
-## 🧪 Minimal example
-
-```python
-import pandas as pd
-
-from phylospectra.io import (
-    read_phylogeny_order,
-    order_taxa_by_phylogeny,
-    centered_log_ratio,
-)
-from phylospectra.spectral import spectral_slope, compressibility_metrics
-
-abundance = pd.read_csv("data_demo/demo_abundance.csv", index_col=0)
-phylogeny_order = read_phylogeny_order("data_demo/demo_phylogeny_order.csv")
-
-abundance = order_taxa_by_phylogeny(abundance, phylogeny_order)
-clr = centered_log_ratio(abundance)
-
-slope = spectral_slope(clr, fmax=0.20)
-metrics = compressibility_metrics(clr, fmax=0.20)
-
-print(slope.head())
-print(metrics.head())
-```
-
----
-
-## ⚙️ Command-line examples
-
-```bash
-python paper_code/04_spectral_compressibility/spectral_compressibility_metrics.py   --abundance data/mgnify/abu.h5   --metadata data/mgnify/metadata.csv   --phylogeny data/phylogeny.csv   --output-dir outputs/04_spectral_compressibility/spectral_compressibility_metrics
-```
-
-```bash
-python paper_code/05_applications/crc_fourier_harmonization.py   --data-dir data/crc_7_cohorts   --taxonomy data/crc_7_cohorts/classification.txt   --output-dir outputs/05_harmonization/crc_fourier_harmonization
-```
-
-```bash
-python paper_code/05_applications/spectral_community_generation.py   --abundance data/generation/mgnify_biome_subset/abundance.h5   --metadata data/generation/mgnify_biome_subset/metadata.csv   --class-col class   --output-dir outputs/06_generation/spectral_community_generation
-```
-
----
-
 ## 🎚️ Key parameters
 
 | Parameter | Meaning |
@@ -604,59 +350,6 @@ Each script writes results to `outputs/` by default.
 *.png   raster figures
 *.pdf   vector figures
 ```
-
-Recommended output policy:
-
-```text
-Small summary tables       may be kept in the repository
-Large intermediate tables  should be excluded from Git
-Raw public datasets        should be stored externally or documented separately
-```
-
----
-
-## 🔁 Reproducibility
-
-Randomized steps use explicit random seeds where applicable.
-
-| Analysis | Randomized step |
-|---|---|
-| MGnify subsampling | fixed `--random-state` |
-| Low-order classification | stratified cross-validation with fixed seed |
-| Synthetic generation | fixed random generator |
-| UMAP embedding | fixed random state where supported |
-
----
-
-## 🧾 Data availability
-
-Some microbiome datasets are large. For public release, it is recommended to keep only small demo files in this repository and provide full download instructions or external archive links in:
-
-```text
-docs/data_availability.md
-```
-
-Suggested external archives:
-
-```text
-Zenodo
-Figshare
-OSF
-Institutional data repository
-```
-
----
-
-## 🧭 Recommended workflow
-
-```text
-1. Install the repository
-2. Prepare data following the data/ folder structure
-3. Run paper_code scripts to reproduce manuscript analyses
-4. Use src/phylospectra functions for new datasets
-5. Save generated outputs under outputs/
-```
-
 ---
 
 ## ⚠️ Notes
@@ -664,20 +357,6 @@ Institutional data repository
 - `paper_code/` is designed for manuscript reproduction.
 - `src/phylospectra/` is designed for reusable method development.
 - The GitHub repository name contains hyphens, but the Python package name does not.
-- Use `import phylospectra`, not `import Phylogenetic-Spectral-Decomposition-Framework`.
-- If you rename `03_pertubation_response_axes` to `03_perturbation_response_axes`, update the README paths and any scripts that call this folder.
-
----
-
-## 🧑‍💻 Citation
-
-If you use this repository, please cite the associated manuscript:
-
-```text
-Phylogenetic spectral compressibility of microbiome organization.
-```
-
-A full citation will be added after publication.
 
 ---
 
@@ -691,6 +370,12 @@ LICENSE
 
 ---
 
-## 📬 Contact
+## Maintainers
 
-For questions, issues or suggestions, please open an issue in this GitHub repository.
+| Name | Email | Organization |
+|---|---|---|
+| Yuli Zhang | yulizhang@hust.edu.cn | PhD student, School of Life Science and Technology, Huazhong University of Science & Technology |
+| Haohong Zhang | haohongzh@gmail.com | PhD student, School of Life Science and Technology, Huazhong University of Science & Technology |
+| Kang Ning | ningkang@hust.edu.cn | Professor, School of Life Science and Technology, Huazhong University of Science & Technology |
+
+
