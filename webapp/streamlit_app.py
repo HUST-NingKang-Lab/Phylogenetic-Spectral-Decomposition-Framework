@@ -6,8 +6,7 @@ Run it locally from the repository root::
 
 Users can upload their own abundance table -- and optionally their own metadata
 and phylogeny -- or start from one of the bundled datasets. Everything is
-computed in memory; nothing is written to disk, so the app also runs unchanged on
-Streamlit Community Cloud.
+computed in memory and written nowhere, so a run leaves no state behind.
 
 The app is organised as pages sharing one sidebar. The Transform page is the
 interactive version of panel a of the manuscript overview figure: it shows the
@@ -1490,9 +1489,6 @@ phylogenetic ordering of taxa works — a tree export's tip order, for instance.
         f"""
 - **Command line** — the manuscript scripts in `paper_code/` accept `--abundance`,
   `--metadata`, `--phylogeny` and the same spectral parameters.
-- **Deploy your own copy** — push the repository to GitHub and point
-  [share.streamlit.io](https://share.streamlit.io) at `webapp/streamlit_app.py`; the repository
-  root's `requirements.txt` is installed automatically.
 - **Cite** — see the repository [README]({REPOSITORY_URL}) for the manuscript reference.
         """
     )

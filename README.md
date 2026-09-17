@@ -59,13 +59,6 @@ spectral parameters and read the results off six pages:
 | **Guide** | Input formats, every parameter, and each error message with its fix |
 | **Data** | Per-sample metrics, the taxon axis, and CSV downloads |
 
-**Deploying a public link** (Streamlit Community Cloud, free):
-
-1. Push this repository to GitHub.
-2. Go to [share.streamlit.io](https://share.streamlit.io) → **New app** → pick the repository and branch.
-3. Set **Main file path** to `webapp/streamlit_app.py`.
-4. Deploy. The `requirements.txt` in the repository root is installed automatically; no further configuration is needed.
-
 ### Input formats
 
 The explorer accepts the layouts that appear in practice:
