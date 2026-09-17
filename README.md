@@ -13,6 +13,8 @@
 ![Topic](https://img.shields.io/badge/topic-microbiome%20spectral%20analysis-44757A?style=flat-square)
 ![Package](https://img.shields.io/badge/package-phylospectra-B7B5A0?style=flat-square)
 
+[![Streamlit app](https://img.shields.io/badge/Streamlit-open%20the%20app-2a78d6?style=flat-square&logo=streamlit&logoColor=white)](https://interactive-explorerexpand1-bajvkkx4txgahxtl4eruxl.streamlit.app/)
+
 </div>
 
 ---
@@ -39,7 +41,13 @@ The Streamlit explorer lets you analyse **your own** abundance table without tou
 the manuscript scripts. It calls the same `phylospectra.pipeline` backend as the
 command-line scripts, so it reports identical numbers.
 
+<a href="https://interactive-explorerexpand1-bajvkkx4txgahxtl4eruxl.streamlit.app/"><img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="Open the app"></a>
+
+**Live app:** https://interactive-explorerexpand1-bajvkkx4txgahxtl4eruxl.streamlit.app/
+
 ### Streamlit explorer
+
+Runs locally as well:
 
 ```bash
 pip install -r requirements.txt
