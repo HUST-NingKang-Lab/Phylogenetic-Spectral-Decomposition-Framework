@@ -27,10 +27,63 @@ This repository contains two complementary layers:
 ```text
 paper_code/        Manuscript analysis scripts and figure-reproduction workflows
 src/phylospectra/  Reusable Python package functions
+webapp/            Streamlit explorer for uploaded or bundled data
 data/              Input abundance, metadata and phylogeny tables
 outputs/           Default output directory for generated tables and figures
 ```
 ---
+
+## 🖥️ Interactive visualization
+
+The Streamlit explorer lets you analyse **your own** abundance table without touching
+the manuscript scripts. It calls the same `phylospectra.pipeline` backend as the
+command-line scripts, so it reports identical numbers.
+
+### Streamlit explorer
+
+```bash
+pip install -r requirements.txt
+streamlit run webapp/streamlit_app.py
+```
+
+Opens in your browser. Upload an abundance CSV — optionally with a metadata table
+and your own phylogeny — or pick one of the bundled datasets, then adjust the
+spectral parameters and read the results off six pages:
+
+| Page | What it does |
+|---|---|
+| **Overview** | Counts, the taxon-matching report, and the whole dataset as one phylo-ordered heatmap |
+| **Transform** | One sample at a time: the phylogeny-ordered signal on the left, its Fourier decomposition on the right. Keep fewer and fewer components and watch the signal rebuild from the lowest ones — the interactive version of the overview figure's decomposition panel |
+| **Spectra** | The same decomposition for every sample: power spectra by group, spectral-slope distributions (Mann–Whitney with Cliff's δ), the macro–micro space, and compressibility |
+| **Case studies** | A worked contrast on your own data, plus four bundled examples with live statistics and a guide to reading the numbers |
+| **Guide** | Input formats, every parameter, and each error message with its fix |
+| **Data** | Per-sample metrics, the taxon axis, and CSV downloads |
+
+**Deploying a public link** (Streamlit Community Cloud, free):
+
+1. Push this repository to GitHub.
+2. Go to [share.streamlit.io](https://share.streamlit.io) → **New app** → pick the repository and branch.
+3. Set **Main file path** to `webapp/streamlit_app.py`.
+4. Deploy. The `requirements.txt` in the repository root is installed automatically; no further configuration is needed.
+
+### Input formats
+
+The explorer accepts the layouts that appear in practice:
+
+| Situation | Handling |
+|---|---|
+| Samples as rows, or taxa as rows | Detected automatically — from shared sample identifiers first, then by how many labels resolve onto the phylogeny. Can be overridden. |
+| Taxon labels are full `k__;p__;…;g__` paths | Matched to the phylogeny by path. |
+| Taxon labels are bare genus or species names | Matched by genus name (`Bacteroides`, `Bacteroides vulgatus`). |
+| No phylogeny of your own | `data/phylogeny.csv` is used by default. |
+
+Taxa that match nothing are dropped, and the app reports exactly how many — check
+that first if a result looks wrong. Because the low/middle/high frequency split
+needs at least six modes, a table needs roughly **14 or more taxa** to be
+analysable; raise `fmax` for small tables.
+
+---
+
 
 ## 🧠 Core concept
 
@@ -87,15 +140,16 @@ source .venv/bin/activate
 
 ## 📦 Dependencies
 
-Core dependencies:
+Install everything:
 
-```text
-numpy
-pandas
-scipy
-scikit-learn
-matplotlib
+```bash
+pip install -r requirements.txt
 ```
+
+That covers the analysis package, the manuscript scripts and the Streamlit
+explorer. The core set is `numpy`, `pandas`, `scipy`, `scikit-learn`,
+`matplotlib` and `seaborn`; `streamlit` and `plotly` are only needed for the
+interactive app.
 ---
 
 ## 🧩 Manuscript-to-code map
@@ -235,6 +289,44 @@ from phylospectra.spectral import spectral_slope, compressibility_metrics
 from phylospectra.response import response_axis, inverse_project_axis, pole_balance
 from phylospectra.harmonization import fourier_batch_harmonization
 from phylospectra.generation import generate_by_group
+from phylospectra.pipeline import run_spectral_pipeline, load_example_dataset
+```
+
+### `pipeline.py`
+
+End-to-end entry point behind the interactive tools:
+
+```text
+EXAMPLE_DATASETS
+available_example_datasets
+load_example_dataset
+load_abundance_any
+detect_orientation
+build_phylogeny_orders
+match_taxa_to_phylogeny
+align_to_phylogeny
+run_spectral_pipeline
+SpectralResult
+```
+
+`run_spectral_pipeline` accepts a path, an uploaded file object or a DataFrame — plus
+optional metadata and phylogeny — and returns every table the visualisations need:
+
+```python
+from phylospectra.pipeline import run_spectral_pipeline
+
+result = run_spectral_pipeline(
+    "abundance.csv",
+    metadata="metadata.csv",
+    group_column="label",
+)
+
+result.summary()          # sample/taxon counts, match report, median statistics
+result.slopes             # per-sample spectral slope beta
+result.compressibility    # C50 / C80 / C90, effective spectral dimension
+result.macro_micro        # macro-organization and micro-fragmentation coordinates
+result.group_slope_stats()  # per-group slopes with Mann-Whitney P and Cliff's delta
+result.sample_table()     # one row per sample, every metric
 ```
 
 ### `io.py`
@@ -305,6 +397,7 @@ Evaluation and machine-learning utilities:
 
 ```text
 alpha_diversity
+cliffs_delta
 batch_r2_from_distance
 batch_silhouette_values
 leave_one_group_auc
@@ -314,14 +407,29 @@ paired_or_unpaired_p
 
 ### `visualization.py`
 
-General plotting helpers:
+General plotting helpers and the shared palette:
 
 ```text
 configure_matplotlib
 style_axis
 embed_profiles
 save_figure
+
+CATEGORICAL_LIGHT / CATEGORICAL_DARK   group identity, eight fixed slots
+SEQUENTIAL_BLUE                        magnitude, light to dark
+DIVERGING_RED_BLUE                     zero-centred values, neutral grey midpoint
+ORDINAL_BLUE                           ordered tiers
+group_color_map / group_symbol_map
+sequential_colormap / diverging_colormap
 ```
+
+The interactive tools colour by group with these slots rather than by rank, so
+filtering a view never repaints the remaining groups. Every palette was checked
+for colour-vision separation (Machado-2009 simulation, CIE76 ΔE), OKLCH lightness
+and chroma, and WCAG contrast against the chart surface; the measured margins are
+recorded in the module. Because the floor-band and dense-scatter cases need a
+second channel, scatter charts pair colour with a marker symbol and label their
+group centroids directly, and every chart has a table view.
 
 ---
 
@@ -356,6 +464,7 @@ Each script writes results to `outputs/` by default.
 
 - `paper_code/` is designed for manuscript reproduction.
 - `src/phylospectra/` is designed for reusable method development.
+- `webapp/` is an interactive front end for user-supplied data; it calls `src/phylospectra/pipeline.py`, so the browser app and the command-line scripts agree with the package.
 - The GitHub repository name contains hyphens, but the Python package name does not.
 
 ---

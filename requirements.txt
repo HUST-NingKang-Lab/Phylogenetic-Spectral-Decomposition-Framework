@@ -1,0 +1,14 @@
+# Core dependencies for the analysis package and the manuscript scripts.
+numpy>=1.23
+pandas>=1.5
+scipy>=1.9
+scikit-learn>=1.2
+matplotlib>=3.6
+seaborn>=0.12
+
+# Interactive explorer (webapp/streamlit_app.py). Skip these two if you only need
+# the analysis package or the paper_code scripts.
+# Streamlit Community Cloud reads this file automatically when deploying
+# webapp/streamlit_app.py.
+streamlit>=1.52
+plotly>=5.15

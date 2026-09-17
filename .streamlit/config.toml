@@ -1,0 +1,18 @@
+# Streamlit chrome, matched to the chart palette in src/phylospectra/visualization.py.
+#
+# Streamlit Community Cloud reads the config from the repository root, and local runs
+# read it from the working directory, so keep this file where it is and run
+# `streamlit run webapp/streamlit_app.py` from the repository root.
+#
+# Without this, widget accents fall back to Streamlit's default red, which is not a
+# slot in the chart palette and reads as a second, competing series colour.
+
+[theme]
+primaryColor = "#2a78d6"            # categorical slot 1, the blue the charts lead with
+backgroundColor = "#fcfcfb"         # SURFACE_LIGHT: the charts' own surface
+secondaryBackgroundColor = "#f4f3ef"
+textColor = "#0b0b0b"               # INK_LIGHT primary
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false

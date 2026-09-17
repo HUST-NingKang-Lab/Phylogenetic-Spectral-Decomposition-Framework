@@ -125,7 +125,11 @@ def macro_micro_scores(values, fmax=0.20, low_fraction=0.25, high_fraction=0.35,
     modes = np.where((frequency >= fmin) & (frequency <= fmax))[0]
 
     if len(modes) < 6:
-        raise ValueError("Too few frequency modes were retained.")
+        raise ValueError(
+            f"Only {len(modes)} frequency mode(s) were retained between fmin={fmin:.4f} and "
+            f"fmax={fmax:.2f}, but the low/middle/high split needs at least 6. Provide more "
+            "taxa (roughly 14 or more) or raise fmax."
+        )
 
     n_low = max(2, int(np.ceil(len(modes) * low_fraction)))
     n_high = max(2, int(np.ceil(len(modes) * high_fraction)))

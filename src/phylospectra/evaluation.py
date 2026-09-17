@@ -11,7 +11,8 @@ def alpha_diversity(abundance):
     values = abundance.to_numpy(dtype=float)
     row_sum = values.sum(axis=1)
     relative = np.divide(values, row_sum[:, None], out=np.zeros_like(values), where=row_sum[:, None] > 0)
-    log_relative = np.where(relative > 0, np.log(relative), 0.0)
+    log_relative = np.zeros_like(relative)
+    np.log(relative, out=log_relative, where=relative > 0)
 
     shannon = -np.sum(relative * log_relative, axis=1)
     richness = np.sum(values > 0, axis=1).astype(float)
@@ -20,7 +21,8 @@ def alpha_diversity(abundance):
     rounded = np.rint(values).astype(int)
     f1 = np.sum(rounded == 1, axis=1).astype(float)
     f2 = np.sum(rounded == 2, axis=1).astype(float)
-    chao1 = richness + np.where(f2 > 0, (f1 * f1) / (2.0 * f2), (f1 * (f1 - 1.0)) / 2.0)
+    bias_corrected = np.divide(f1 * f1, 2.0 * f2, out=np.zeros_like(f1), where=f2 > 0)
+    chao1 = richness + np.where(f2 > 0, bias_corrected, (f1 * (f1 - 1.0)) / 2.0)
 
     return pd.DataFrame(
         {
@@ -160,6 +162,20 @@ def roc_tables(labels, scores, class_names, representation):
     )
 
     return pd.DataFrame(curve_records), pd.DataFrame(auc_records)
+
+
+def cliffs_delta(first, second):
+    first = np.asarray(first, dtype=float)
+    second = np.asarray(second, dtype=float)
+    first = first[np.isfinite(first)]
+    second = second[np.isfinite(second)]
+
+    if len(first) == 0 or len(second) == 0:
+        return np.nan
+
+    greater = np.sum(first[:, None] > second[None, :])
+    smaller = np.sum(first[:, None] < second[None, :])
+    return float((greater - smaller) / (len(first) * len(second)))
 
 
 def paired_or_unpaired_p(before, after, paired=True):
